@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R.I.P Garden</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+  font-family: "Pixelify Sans", sans-serif;
+            color: #e8e8e8;
+            line-height: 1.6;
+            font-weight: 400;
+            min-height: 100vh;
+            /* BACKGROUND IMAGE PATH */
+            background-image: url('s.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Fallback if background.png doesn't load */
+        body:before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 3rem;
+        }
+
+        .logo {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 1.5rem;
+            /* LOGO IMAGE PATH */
+            background: url('a.png') center/contain no-repeat;
+            opacity: 0.8;
+        }
+
+        /* Fallback if logo.png doesn't exist */
+        .logo:before {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: #666;
+            border: 1px solid #333;
+        }
+
+        /* Only show fallback if image fails to load */
+        .logo:has(img[src="a.png"]):before {
+            display: none;
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 400;
+            letter-spacing: 6px;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            text-shadow: black;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #000000;
+            margin-bottom: 2rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .twitter-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .twitter-link:hover {
+            color: #fff;
+            border-bottom-color: #666;
+        }
+
+        section {
+            margin: 3rem 0;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 1.5rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .graveyard {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tombstone {
+            background: rgba(17, 17, 17, 0.8);
+            border-bottom: 1px solid #222;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .tombstone:hover {
+            background: rgba(21, 21, 21, 0.9);
+        }
+
+        .token-name {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .epitaph {
+            font-size: 0.9rem;
+            color: #777;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .death-date {
+            font-size: 0.8rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .wallet-address {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.7rem;
+            color: #444;
+            margin-bottom: 1.5rem;
+            word-break: break-all;
+        }
+
+        .send-flowers {
+            background: transparent;
+            border: 1px solid #333;
+            color: #666;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-flowers:hover {
+            color: #fff;
+            border-color: #555;
+        }
+
+        .dying-tokens {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .dying-token {
+            background: rgba(17, 17, 17, 0.8);
+            border-bottom: 1px solid #222;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .dying-token-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .dying-token-name {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .life-bar-container {
+            width: 200px;
+            height: 1px;
+            background: #222;
+        }
+
+        .life-bar {
+            height: 100%;
+            background: #fff;
+            transition: width 2s ease;
+        }
+
+        .life-percentage {
+            font-size: 0.8rem;
+            color: #666;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .status-note {
+            font-size: 0.8rem;
+            color: #555;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+            border-top: 1px solid #222;
+            color: #444;
+            font-size: 0.8rem;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(17, 17, 17, 0.9);
+            border: 1px solid #333;
+            padding: 1rem 2rem;
+            color: #777;
+            font-size: 0.85rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                letter-spacing: 4px;
+            }
+
+            .graveyard {
+                grid-template-columns: 1fr;
+            }
+
+            .dying-token {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .life-bar-container {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo"></div>
+            <h1>R.I.P GARDEN</h1>
+            <p class="subtitle">When a token dies, users send flowers to its grave.</p>
+            <a href="https://x.com/RIPGardenSol" class="twitter-link" target="_blank">
+                Follow our Memorial
+            </a>
+        </header>
+        
+        <section id="dead-tokens">
+            <div class="section-title">The Graveyard</div>
+            <div class="graveyard" id="graveyard-container">
+                <!-- Tombstones will be generated by JavaScript -->
+            </div>
+        </section>
+        
+        <section id="dying-tokens">
+            <div class="section-title">Tokens Nearing Their End</div>
+            <div class="dying-tokens" id="dying-tokens-container">
+                <!-- Dying tokens will be generated by JavaScript -->
+            </div>
+        </section>
+        
+        <footer>
+            <p>R.I.P Garden - A solemn memorial for tokens that have passed from this blockchain</p>
+            <p>Every click is a farewell. Every flower, a tribute.</p>
+        </footer>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Sample data for dead tokens
+        const deadTokens = [
+            {
+                name: "CizLY8YaSc1MXpEwf9tD89S4A1RgMCR67gXoX5pLpump",
+                epitaph: "Chased the moon too hard and fell back to earth.",
+                deathDate: "2023-11-15",
+                wallet: "ARENA"
+            },
+            {
+                name: "8fdBKZq7wo9fJbsZEZhq6omCgvKzLt97HY9XaGgqpump", 
+                epitaph: "Was not safu after all.",
+                deathDate: "2023-09-22",
+                wallet: "NEO"
+            },
+            {
+                name: "C56say1io8uGLCPzxRYtcwoN5JXKc4E8wcSnQJj9pump",
+                epitaph: "A single tweet away from glory.",
+                deathDate: "2023-12-05", 
+                wallet: "WAYNE"
+            },
+            {
+                name: "52AMVcqvUiuacEhqgtX3UyYdncpWNiBnMZjkuWHHpump",
+                epitaph: "APY dreams turned to dust.",
+                deathDate: "2023-10-30",
+                wallet: "SECTION 8"
+            }
+        ];
+
+        // Sample data for dying tokens
+        const dyingTokens = [
+            { name: "PUMPKIN", life: 15 },
+            { name: "RUGPULLRESISTANT", life: 28 },
+            { name: "TOTHEMARS", life: 8 },
+            { name: "DIAMONDHANDS", life: 42 }
+        ];
+
+        // Initialize the memorial
+        document.addEventListener('DOMContentLoaded', function() {
+            renderGraveyard();
+            renderDyingTokens();
+            startLifeDecay();
+        });
+
+        // Render the graveyard with tombstone elements
+        function renderGraveyard() {
+            const container = document.getElementById('graveyard-container');
+            container.innerHTML = '';
+            
+            deadTokens.forEach(token => {
+                const tombstone = document.createElement('div');
+                tombstone.className = 'tombstone';
+                
+                tombstone.innerHTML = `
+                    <div class="token-name">${token.name}</div>
+                    <div class="epitaph">"${token.epitaph}"</div>
+                    <div class="death-date">${formatDate(token.deathDate)}</div>
+                    <div class="wallet-address">${token.wallet}</div>
+                    <button class="send-flowers" data-token="${token.name}">SEND FLOWERS</button>
+                `;
+                
+                container.appendChild(tombstone);
+            });
+            
+            // Add event listeners to send flowers buttons
+            document.querySelectorAll('.send-flowers').forEach(button => {
+                button.addEventListener('click', function() {
+                    const tokenName = this.getAttribute('data-token');
+                    sendFlowers(tokenName);
+                });
+            });
+        }
+
+        // Render the dying tokens section
+        function renderDyingTokens() {
+            const container = document.getElementById('dying-tokens-container');
+            container.innerHTML = '';
+            
+            dyingTokens.forEach(token => {
+                const dyingToken = document.createElement('div');
+                dyingToken.className = 'dying-token';
+                
+                dyingToken.innerHTML = `
+                    <div class="dying-token-info">
+                        <div class="dying-token-name">${token.name}</div>
+                        <div class="status-note">Circling the drain</div>
+                    </div>
+                    <div class="life-bar-container">
+                        <div class="life-bar" style="width: ${token.life}%"></div>
+                    </div>
+                    <div class="life-percentage">${token.life}%</div>
+                `;
+                
+                container.appendChild(dyingToken);
+            });
+        }
+
+        // Format date for display
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        // Send flowers function
+        function sendFlowers(tokenName) {
+            showNotification(`Flowers sent to ${tokenName}'s memorial`);
+            
+            // Create subtle visual feedback
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'FLOWERS SENT';
+            button.style.color = '#fff';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.color = '';
+            }, 2000);
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.opacity = '1';
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+            }, 3000);
+        }
+
+        // Simulate dying tokens gradually fading
+        function startLifeDecay() {
+            setInterval(() => {
+                dyingTokens.forEach((token, index) => {
+                    if (token.life > 0) {
+                        // Reduce life by a small random amount
+                        const reduction = Math.random() * 2;
+                        token.life = Math.max(0, token.life - reduction);
+                        
+                        // Update the UI
+                        const lifeBars = document.querySelectorAll('.life-bar');
+                        const lifePercentages = document.querySelectorAll('.life-percentage');
+                        
+                        if (lifeBars[index] && lifePercentages[index]) {
+                            lifeBars[index].style.width = `${token.life}%`;
+                            lifePercentages[index].textContent = `${Math.round(token.life)}%`;
+                            
+                            // If token has died, move it to the graveyard
+                            if (token.life <= 0 && !token.moved) {
+                                moveToGraveyard(token);
+                                token.moved = true;
+                            }
+                        }
+                    }
+                });
+                
+                renderDyingTokens();
+            }, 3000);
+        }
+
+        // Move a token from dying to dead
+        function moveToGraveyard(token) {
+            // Create a new dead token
+            const newDeadToken = {
+                name: token.name,
+                epitaph: getRandomEpitaph(),
+                deathDate: new Date().toISOString().split('T')[0],
+                wallet: generateWalletAddress()
+            };
+            
+            deadTokens.push(newDeadToken);
+            renderGraveyard();
+            showNotification(`${token.name} has passed away. May it rest in peace.`);
+        }
+
+        // Helper functions for generating content
+        function getRandomEpitaph() {
+            const epitaphs = [
+                "Couldn't survive the bear.",
+                "Rug pulled from under.",
+                "Liquidity evaporated.",
+                "Devs abandoned ship.",
+                "Market cap went to zero.",
+                "Last holder turned off the lights."
+            ];
+            return epitaphs[Math.floor(Math.random() * epitaphs.length)];
+        }
+
+        function generateWalletAddress() {
+            const chars = '0123456789abcdef';
+            let address = '0x';
+            for (let i = 0; i < 10; i++) {
+                address += chars[Math.floor(Math.random() * chars.length)];
+            }
+            address += '...';
+            for (let i = 0; i < 5; i++) {
+                address += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return address;
+        }
+    </script>
+</body>
+</html>
